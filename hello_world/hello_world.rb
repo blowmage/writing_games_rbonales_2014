@@ -19,6 +19,8 @@ class HelloWorldGame < Gosu::Window
     center_y = self.height/2
     @image_x  = center_x - @image.width/2
     @image_y  = center_y - @image.height/2
+    @image_x += 150 * Math.sin(Time.now.to_f)
+    @image_y += 200 * Math.cos(Time.now.to_f)
   end
 
   def draw
