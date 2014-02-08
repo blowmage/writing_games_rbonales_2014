@@ -6,6 +6,10 @@ class HelloWorldGame < Gosu::Window
     self.caption = "Hello world!"
   end
 
+  def button_down id
+    close if id == Gosu::KbEscape
+  end
+
   def update
   end
 
