@@ -7,18 +7,26 @@ class Sprite
     # center image
     @x = @window.width/2  - @image.width/2
     @y = @window.height/2 - @image.height/2
+    # direction and movement
+    @direction = :right
   end
 
   def update
     if @window.button_down? Gosu::KbLeft
+      @direction = :left
       @x += -5
     elsif @window.button_down? Gosu::KbRight
+      @direction = :right
       @x += 5
     end
   end
 
   def draw
-    @image.draw @x, @y, 1
+    if @direction == :right
+      @image.draw @x, @y, 1
+    else
+      @image.draw @x, @y, 1, -1, 1
+    end
   end
 
 end
