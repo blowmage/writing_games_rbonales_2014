@@ -25,7 +25,7 @@ class Sprite
     if @direction == :right
       @image.draw @x, @y, 1
     else
-      @image.draw @x, @y, 1, -1, 1
+      @image.draw @x + @image.width, @y, 1, -1, 1
     end
   end
 
