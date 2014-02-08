@@ -4,6 +4,10 @@ class HelloWorldGame < Gosu::Window
   def initialize width=800, height=600, fullscreen=false
     super
     self.caption = "Hello world!"
+    @image = Gosu::Image.from_text self,
+                                   "Hello world!",
+                                   Gosu.default_font_name,
+                                   100
   end
 
   def button_down id
@@ -14,6 +18,7 @@ class HelloWorldGame < Gosu::Window
   end
 
   def draw
+    @image.draw 0, 0, 1
   end
 end
 
