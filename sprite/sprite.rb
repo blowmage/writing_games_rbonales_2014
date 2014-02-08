@@ -8,28 +8,37 @@ class Sprite
     @idle = Gosu::Image.load_tiles @window,
                                    "player_160x160_idle.png",
                                    @width, @height, true
+    @move = Gosu::Image.load_tiles @window,
+                                   "player_160x160_move.png",
+                                   @width, @height, true
     # center image
     @x = @window.width/2  - @width/2
     @y = @window.height/2 - @height/2
     # direction and movement
     @direction = :right
     @frame = 0
+    @moving = false
   end
 
   def update
     @frame += 1
+    @moving = false
     if @window.button_down? Gosu::KbLeft
       @direction = :left
+      @moving = true
       @x += -5
     elsif @window.button_down? Gosu::KbRight
       @direction = :right
+      @moving = true
       @x += 5
     end
   end
 
   def draw
+    # @move and @idle are the same size,
+    # so we can use the same frame calc.
     f = @frame % @idle.size
-    image = @idle[f]
+    image = @moving ? @move[f] : @idle[f]
     if @direction == :right
       image.draw @x, @y, 1
     else
