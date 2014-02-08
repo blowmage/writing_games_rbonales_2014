@@ -18,8 +18,8 @@ class HelloWorldGame < Gosu::Window
   end
 
   def draw
-    @image.draw self.width/2  - @image.width,
-                self.height/2 - @image.height,
+    @image.draw self.width/2  - @image.width/2,
+                self.height/2 - @image.height/2,
                 1
   end
 end
