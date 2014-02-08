@@ -31,8 +31,12 @@ class PlxGame < Gosu::Window
     close      if button_down? Gosu::KbEscape
   end
 
+  def cam_coords
+    [0 - @x, 0 - @y]
+  end
+
   def draw
-    translate 0 - @x, 0 - @y do
+    translate *cam_coords do
       @background.draw 0, 0, -2
       @foreground.draw 0, 0, -1
     end
