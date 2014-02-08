@@ -15,12 +15,14 @@ class HelloWorldGame < Gosu::Window
   end
 
   def update
+    center_x = self.width/2
+    center_y = self.height/2
+    @image_x  = center_x - @image.width/2
+    @image_y  = center_y - @image.height/2
   end
 
   def draw
-    @image.draw self.width/2  - @image.width/2,
-                self.height/2 - @image.height/2,
-                1
+    @image.draw @image_x, @image_y, 1
   end
 end
 
