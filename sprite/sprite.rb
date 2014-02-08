@@ -10,6 +10,11 @@ class Sprite
   end
 
   def update
+    if @window.button_down? Gosu::KbLeft
+      @x += -5
+    elsif @window.button_down? Gosu::KbRight
+      @x += 5
+    end
   end
 
   def draw
