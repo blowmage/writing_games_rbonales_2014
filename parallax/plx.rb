@@ -1,6 +1,7 @@
 require "gosu"
 
 class Sprite
+  attr_accessor :x, :y, :width, :height, :min_x, :max_x
   def initialize window
     @window = window
     # image
@@ -14,6 +15,9 @@ class Sprite
     # center image
     @x = @window.width/2  - @width/2
     @y = @window.height/2 - @height/2
+    # bounds
+    @min_x = 0
+    @max_x = @window.width
     # direction and movement
     @direction = :right
     @frame = 0
@@ -27,10 +31,12 @@ class Sprite
       @direction = :left
       @moving = true
       @x += -5
+      @x = @min_x if @x < @min_x
     elsif @window.button_down? Gosu::KbRight
       @direction = :right
       @moving = true
       @x += 5
+      @x = @max_x if @x > @max_x
     end
   end
 
@@ -54,29 +60,12 @@ class PlxGame < Gosu::Window
     @foreground = Gosu::Image.new(self, "foreground.png", false)
     @background = Gosu::Image.new(self, "background.png", false)
     @sprite = Sprite.new self
+    @sprite.max_x = @foreground.width
     @movement = 8
     @x = @y = 0
   end
 
-  def move_right
-    @x = [@x + @movement, max_x].min
-  end
-
-  def move_left
-    @x = [@x - @movement, min_x].max
-  end
-
-  def min_x
-    0
-  end
-
-  def max_x
-    @max_x ||= @foreground.width - self.width
-  end
-
   def update
-    move_right if button_down? Gosu::KbRight
-    move_left  if button_down? Gosu::KbLeft
     close      if button_down? Gosu::KbEscape
     @sprite.update
   end
@@ -86,11 +75,12 @@ class PlxGame < Gosu::Window
   end
 
   def plx_coords
-    [0 - (@x * plx_ratio), 0]
+    [(cam_coords.first * plx_ratio), 0]
   end
 
   def cam_coords
-    [0 - @x, 0 - @y]
+    cam_x = [[@sprite.x - self.width/2, 0].max, [@sprite.x + self.width/2, @foreground.width - self.width].min].min
+    [0 - cam_x, 0 - @y]
   end
 
   def draw
